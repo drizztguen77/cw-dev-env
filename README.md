@@ -18,6 +18,7 @@ _To run apache:_
 docker run -d --name web -p 80:80 -v "/c/Development/work/html":/usr/local/apache2/htdocs/ cw-apache
 ```
 
+
 ### Tomcat
 
 To build and run the Tomcat docker container by itself just use the following commands.
@@ -35,6 +36,7 @@ _To run tomcat:_
 ```
 docker run -d --name app -p 8080:8080 cw-tomcat
 ```
+
 
 ### Mongo
 
