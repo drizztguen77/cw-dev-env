@@ -59,9 +59,7 @@ docker run -d --name mongo -p 27017:27017 -v "/c/Development/work/db":/data/db c
 
 &nbsp;
 
-&nbsp;
-
-The following is the meaning of the parameters:
+**The following is the meaning of the parameters:**
 
 ```
 -p HostPort:ContainerPort = Maps the container port to a host port
