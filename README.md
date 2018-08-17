@@ -1,5 +1,6 @@
 # cw-dev-env
 
+&nbsp;
 ### Apache
 
 To build and run the Apache docker container by itself just use the following commands.  You will need to replace the path before : in -v with a path on your localhost.
@@ -18,7 +19,7 @@ _To run apache:_
 docker run -d --name web -p 80:80 -v "/c/Development/work/html":/usr/local/apache2/htdocs/ cw-apache
 ```
 
-
+&nbsp;
 ### Tomcat
 
 To build and run the Tomcat docker container by itself just use the following commands.
@@ -37,7 +38,7 @@ _To run tomcat:_
 docker run -d --name app -p 8080:8080 cw-tomcat
 ```
 
-
+&nbsp;
 ### Mongo
 
 To build and run the MongoDB docker container by itself just use the following commands. You will need to replace the path before : in -v with a path on your localhost.
@@ -66,7 +67,7 @@ The following is the meaning of the parameters:
 ```
 
 
-
+&nbsp;
 ### Startup Compose
 
 To startup
