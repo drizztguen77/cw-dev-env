@@ -38,6 +38,12 @@ _To run tomcat:_
 docker run -d --name app -p 8080:8080 cw-tomcat
 ```
 
+_To copy a war to tomcat:_
+```
+docker cp $PATH_TO_WAR/somewar.war cw-tomcat:/usr/local/tomcat/webapps/somewar.war
+```
+
+
 &nbsp;
 ### Mongo
 
