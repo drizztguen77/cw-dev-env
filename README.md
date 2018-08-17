@@ -4,13 +4,13 @@
 
 To build and run the Apache docker container by itself just use the following commands.  You will need to replace the path before : in -v with a path on your localhost.
 
-```
-cd apache
+```cd apache```
 
-_To build apache:_  docker build -t cw-apache .
+_To build apache:_
+```docker build -t cw-apache .```
 
-To run apache: docker run -d --name web -p 80:80 -v "/c/Development/work/html":/usr/local/apache2/htdocs/ cw-apache
-```
+_To run apache:_
+```docker run -d --name web -p 80:80 -v "/c/Development/work/html":/usr/local/apache2/htdocs/ cw-apache```
 
 ### Tomcat
 
