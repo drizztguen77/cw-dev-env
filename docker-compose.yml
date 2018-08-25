@@ -29,6 +29,8 @@ services:
     container_name: app
 #    links:
 #    - mongodb:mongodb
+    volumes:
+    - logs:/usr/local/tomcat/logs/
 
   mongodb:
     build: mongodb/
@@ -47,6 +49,11 @@ volumes:
     driver_opts:
       type: none
       device: /c/Development/work/html
+      o: bind
+  logs:
+    driver_opts:
+      type: none
+      device: /c/Development/work/logs
       o: bind
   data:
     driver_opts:
