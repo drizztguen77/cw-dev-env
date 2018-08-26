@@ -7,7 +7,7 @@ services:
     ports:
       - 80:80
     networks:
-      - ui
+      - internal
     depends_on:
       - app
     hostname: web
@@ -21,24 +21,25 @@ services:
       - 8080:8080
       - 9001:9001
     networks:
-      - ui
-      - db
+      - internal
     depends_on:
-      - mongodb
+      - mongo
     hostname: app
+    environment:
+      MONGODB_HOST: mongo
     container_name: app
 #    links:
 #    - mongodb:mongodb
     volumes:
     - logs:/usr/local/tomcat/logs/
 
-  mongodb:
+  mongo:
     build: mongodb/
     ports:
       - 27017:27017
     networks:
-      - db
-    hostname: mongodb
+      - internal
+    hostname: mongo
     container_name: mongo
     volumes:
       - data:/data/db
@@ -48,21 +49,22 @@ volumes:
   html:
     driver_opts:
       type: none
-      device: /c/Development/work/html
+      device: ${DEV_WORK}/html
       o: bind
   logs:
     driver_opts:
       type: none
-      device: /c/Development/work/logs
+      device: ${DEV_WORK}/logs
       o: bind
   data:
     driver_opts:
       type: none
-      device: /c/Development/work/db
+      device: ${DEV_WORK}/db
       o: bind
 
 networks:
-  ui:
-    driver: bridge
-  db:
-    driver: bridge
+  internal:
+#  ui:
+#    driver: bridge
+#  db:
+#    driver: bridge
