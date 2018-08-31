@@ -35,7 +35,7 @@ docker build -t cw-tomcat .
 
 _To run tomcat:_
 ```
-docker run -d --name app -p 8080:8080 cw-tomcat
+docker run -d --name app -p 8080:8080 -v "/mnt/c/Development/work/logs":/usr/local/tomcat/logs/ cw-tomcat
 ```
 
 _To copy a war to tomcat:_
@@ -82,3 +82,20 @@ To startup
 ```
 docker-compose up -d --build
 ```
+
+&nbsp;
+### Shutdown Compose
+
+To startup
+```
+docker-compose down --volumes
+```
+
+&nbsp;
+### Interactive Shell
+
+To make an interactive shell on a running container
+```
+docker exec -ti <container name> /bin/bash
+```
+

@@ -7,5 +7,7 @@ ENV MONGO_INITDB_ROOT_USERNAME=root
 ENV MONGO_INITDB_ROOT_PASSWORD=example
 
 VOLUME ["/data/db"]
+
 WORKDIR /data
+
 CMD ["mongod", "--smallfiles"]

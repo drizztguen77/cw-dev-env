@@ -2,21 +2,22 @@ version: '3.7'
 
 services:
   web:
-    build:
-      context: ./apache
+    build: apache/
+    restart: always
     ports:
       - 80:80
     networks:
       - internal
     depends_on:
       - app
-    hostname: web
+    #hostname: web
     container_name: web
     volumes:
       - html:/usr/local/apache2/htdocs/
 
   app:
     build: tomcat/
+    restart: always
     ports:
       - 8080:8080
       - 9001:9001
@@ -24,9 +25,7 @@ services:
       - internal
     depends_on:
       - mongo
-    hostname: app
-    environment:
-      MONGODB_HOST: mongo
+    #hostname: app
     container_name: app
 #    links:
 #    - mongodb:mongodb
@@ -35,11 +34,15 @@ services:
 
   mongo:
     build: mongodb/
+    restart: always
     ports:
       - 27017:27017
     networks:
       - internal
-    hostname: mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    #hostname: mongo
     container_name: mongo
     volumes:
       - data:/data/db
@@ -49,17 +52,20 @@ volumes:
   html:
     driver_opts:
       type: none
-      device: ${DEV_WORK}/html
+#      device: ${DEV_WORK}/html
+      device: /c/Development/work/html
       o: bind
   logs:
     driver_opts:
       type: none
-      device: ${DEV_WORK}/logs
+#      device: ${DEV_WORK}/logs
+      device: /c/Development/work/logs
       o: bind
   data:
     driver_opts:
       type: none
-      device: ${DEV_WORK}/db
+#      device: ${DEV_WORK}/db
+      device: /mnt/c/Development/work/db
       o: bind
 
 networks:
