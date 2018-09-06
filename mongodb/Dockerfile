@@ -6,7 +6,8 @@ LABEL description="Image containing MongoDB"
 ENV MONGO_INITDB_ROOT_USERNAME=root
 ENV MONGO_INITDB_ROOT_PASSWORD=example
 
-VOLUME ["/data/db"]
+#VOLUME ["/data/db"]
+VOLUME ["/data/backup"]
 
 WORKDIR /data
 

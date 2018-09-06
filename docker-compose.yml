@@ -45,27 +45,23 @@ services:
     #hostname: mongo
     container_name: mongo
     volumes:
-      - data:/data/db
-      - data:/data/configdb
+      - data:/data/backup
 
 volumes:
   html:
     driver_opts:
       type: none
-#      device: ${DEV_WORK}/html
-      device: /c/Development/work/html
+      device: ${DEV_WORK}/html
       o: bind
   logs:
     driver_opts:
       type: none
-#      device: ${DEV_WORK}/logs
-      device: /c/Development/work/logs
+      device: ${DEV_WORK}/logs
       o: bind
   data:
     driver_opts:
       type: none
-#      device: ${DEV_WORK}/db
-      device: /mnt/c/Development/work/db
+      device: ${DEV_WORK}/db
       o: bind
 
 networks:
