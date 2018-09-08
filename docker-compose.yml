@@ -11,13 +11,15 @@ services:
     depends_on:
       - app
     #hostname: web
-    container_name: web
+    #container_name: web
     volumes:
       - html:/usr/local/apache2/htdocs/
 
   app:
     build: tomcat/
     restart: always
+    environment:
+    - "DEBUG_PORT=9001"
     ports:
       - 8080:8080
       - 9001:9001
@@ -26,24 +28,22 @@ services:
     depends_on:
       - mongo
     #hostname: app
-    container_name: app
-#    links:
-#    - mongodb:mongodb
+    #container_name: app
     volumes:
     - logs:/usr/local/tomcat/logs/
 
   mongo:
     build: mongodb/
     restart: always
+    environment:
+      - "MONGO_ROOT_USERNAME: root"
+      - "MONGO_ROOT_PASSWORD: root"
     ports:
       - 27017:27017
     networks:
       - internal
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: example
     #hostname: mongo
-    container_name: mongo
+    #container_name: mongo
     volumes:
       - data:/data/backup
 
@@ -66,7 +66,3 @@ volumes:
 
 networks:
   internal:
-#  ui:
-#    driver: bridge
-#  db:
-#    driver: bridge

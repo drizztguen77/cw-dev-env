@@ -11,12 +11,12 @@ cd apache
 
 _To build apache:_
 ```
-docker build -t cw-apache .
+docker build -t cw-dev-env_web .
 ```
 
 _To run apache:_
 ```
-docker run -d --name web -p 80:80 -v "/c/Development/work/html":/usr/local/apache2/htdocs/ cw-apache
+docker run -d --name web -p 80:80 -v "/c/Development/work/html":/usr/local/apache2/htdocs/ cw-dev-env_web
 ```
 
 &nbsp;
@@ -30,17 +30,17 @@ cd tomat
 
 _To build tomcat:_
 ```
-docker build -t cw-tomcat .
+docker build -t cw-dev-env_app .
 ```
 
 _To run tomcat:_
 ```
-docker run -d --name app -p 8080:8080 -v "/mnt/c/Development/work/logs":/usr/local/tomcat/logs/ cw-tomcat
+docker run -d --name app -p 8080:8080 --env DEBUG_PORT=9001 -v "/mnt/c/Development/work/logs":/usr/local/tomcat/logs/ cw-dev-env_app
 ```
 
 _To copy a war to tomcat:_
 ```
-docker cp $PATH_TO_WAR/somewar.war cw-tomcat:/usr/local/tomcat/webapps/somewar.war
+docker cp $PATH_TO_WAR/somewar.war cw-dev-env_app:/usr/local/tomcat/webapps/somewar.war
 ```
 
 
@@ -55,12 +55,24 @@ cd mongodb
 
 _To build mongodb:_
 ```
-docker build -t cw-mongodb .
+docker build -t cw-dev-env_mongo .
 ```
 
 _To run mongodb:_
 ```
-docker run -d --name mongo -p 27017:27017 -v "/c/Development/work/db":/data/db cw-mongodb
+docker run -d --name mongo -p 27017:27017 --env MONGO_ROOT_USERNAME=root --env MONGO_ROOT_PASSWORD=root -v "/c/Development/work/db":/data/backup cw-dev-env_mongo
+```
+
+&nbsp;
+
+_Backup Mongo DB_
+```
+docker exec -w /data mongo /bin/tar czf backup/mongodb.tar.gz db
+```
+
+_Restore Mongo DB_
+```
+docker exec -w /data mongo /bin/tar xzf backup/mongodb.tar.gz
 ```
 
 &nbsp;
@@ -78,7 +90,7 @@ docker run -d --name mongo -p 27017:27017 -v "/c/Development/work/db":/data/db c
 &nbsp;
 ### Startup Compose
 
-To startup
+_To startup_
 ```
 docker-compose up -d --build
 ```
@@ -86,7 +98,7 @@ docker-compose up -d --build
 &nbsp;
 ### Shutdown Compose
 
-To startup
+_To startup_
 ```
 docker-compose down --volumes
 ```
@@ -94,8 +106,20 @@ docker-compose down --volumes
 &nbsp;
 ### Interactive Shell
 
-To make an interactive shell on a running container
+_To make an interactive shell on a running container_
 ```
 docker exec -ti <container name> /bin/bash
+```
+
+&nbsp;
+
+_Backup Mongo DB from another container_
+```
+docker run --rm --link running_mongo:mongo -v /c/Development/work/db/backup:/backup mongo bash -c ‘mongodump --out /backup --host $MONGO_PORT_27017_TCP_ADDR’
+```
+
+_Restore Mongo DB from another container_
+```
+docker run --rm --link running_mongo:mongo -v /c/Development/work/db/backup:/backup mongo bash -c ‘mongorestore /backup --host $MONGO_PORT_27017_TCP_ADDR’
 ```
 
