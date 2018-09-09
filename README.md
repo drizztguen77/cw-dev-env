@@ -67,12 +67,12 @@ docker run -d --name mongo -p 27017:27017 --env MONGO_ROOT_USERNAME=root --env M
 
 _Backup Mongo DB_
 ```
-docker exec -w /data mongo /bin/tar czf backup/mongodb.tar.gz db
+docker exec -w /data cw-dev-env_mongo_1 /data/dump.sh
 ```
 
 _Restore Mongo DB_
 ```
-docker exec -w /data mongo /bin/tar xzf backup/mongodb.tar.gz
+docker exec -w /data cw-dev-env_mongo_1 /data/restore.sh
 ```
 
 &nbsp;
@@ -115,11 +115,11 @@ docker exec -ti <container name> /bin/bash
 
 _Backup Mongo DB from another container_
 ```
-docker run --rm --link running_mongo:mongo -v /c/Development/work/db/backup:/backup mongo bash -c ‘mongodump --out /backup --host $MONGO_PORT_27017_TCP_ADDR’
+docker run --rm --link running_mongo:mongo -v /c/Development/work/db:/data/backup mongo bash -c ‘mongodump --quiet --gzip --archive=/data/backup/$MONGO_BACKUP_FILENAME.tar.gz --host $MONGO_HOST:$MONGO_PORT’
 ```
 
 _Restore Mongo DB from another container_
 ```
-docker run --rm --link running_mongo:mongo -v /c/Development/work/db/backup:/backup mongo bash -c ‘mongorestore /backup --host $MONGO_PORT_27017_TCP_ADDR’
+docker run --rm --link running_mongo:mongo -v /c/Development/work/db:/data/backup mongo bash -c ‘mongorestore --quiet --gzip --archive=/data/backup/$MONGO_BACKUP_FILENAME.tar.gz --host $MONGO_HOST:$MONGO_PORT’
 ```
 

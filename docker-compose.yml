@@ -36,8 +36,11 @@ services:
     build: mongodb/
     restart: always
     environment:
-      - "MONGO_ROOT_USERNAME: root"
-      - "MONGO_ROOT_PASSWORD: root"
+      - "MONGO_ROOT_USERNAME=root"
+      - "MONGO_ROOT_PASSWORD=root"
+      - "MONGO_BACKUP_FILENAME=recallers"
+      - "MONGO_HOST=cw-dev-env_mongo_1"
+      - "MONGO_PORT=27017"
     ports:
       - 27017:27017
     networks:

@@ -11,10 +11,12 @@ VOLUME ["/data/backup"]
 
 WORKDIR /data
 
-COPY restoredb.sh /data/restoredb.sh
-RUN chmod +x /data/restoredb.sh
-RUN ls -laF
-RUN pwd
-RUN /data/restoredb.sh
+# Dump
+COPY ./dump.sh .
+RUN sed -i 's/\r$//' /data/dump.sh && chmod +x /data/dump.sh
+
+# Restore
+COPY ./restore.sh .
+RUN sed -i 's/\r$//' /data/restore.sh && chmod +x /data/restore.sh
 
 CMD ["mongod", "--smallfiles"]
